@@ -1,51 +1,54 @@
 window.onload = function(){
-  i1 = document.createElement("input");
-  i1.type = 'text';
-  i1.size="40";
-  i1.id = 'in1';
-  i2 = document.createElement("input");
-  i2.type = 'text';
-  i2.size="40";
-  i2.id = 'in2';
-  br = document.createElement('br');
-  spn = document.createElement("span");
-  spn.innerHTML = '<p> + </p>';
-  res = document.createElement('input'); 
-  res.id = 'butt';
-  res.type = 'button';
-  res.size = '40';
-  res.value = 'Посчитать';
-  res.onclick = function(){
-    if(document.getElementById("errmsg")!=null)document.getElementById("errmsg").remove();
-    if(document.getElementById("errmsg")!=null)document.getElementById("errmsg").remove();
-    if(document.getElementById("result")!=null)document.getElementById("result").remove();
-    let in1val = parseInt(document.getElementById("in1").value, 10);
-    let in2val = parseInt(document.getElementById("in2").value, 10);
-    if(isNaN(in1val)){
-      let el = document.getElementById("in1");
-      let err = document.createElement("div");
-      err.id= "errmsg";
-      err.innerHTML = "<p>Это не число</p>";
-      el.after(err);
+  fistOperrandTextField = document.createElement("input");
+  fistOperrandTextField.type = 'text';
+  fistOperrandTextField.size="40";
+  secondOperrandTextField = document.createElement("input");
+  secondOperrandTextField.type = 'text';
+  secondOperrandTextField.size="40";
+  breakRow = document.createElement('br');
+  plusText = document.createElement("span");
+  plusText.innerHTML = '<p> + </p>';
+  resultButton = document.createElement('input'); 
+  resultButton.id = 'butt';
+  resultButton.type = 'button';
+  resultButton.size = '40';
+  resultButton.value = 'Посчитать';
+
+  resultButton.onclick = function(){
+    if(document.getElementById("errorMessageOfFirstOperand")!=null)document.getElementById("errorMessageOfFirstOperand").remove();
+    if(document.getElementById("errorMessageOfSecondOperand")!=null)document.getElementById("errorMessageOfSecondOperand").remove();
+    if(document.getElementById("resultText")!=null)document.getElementById("resultText").remove();
+
+    let valueOfFirstInput = fistOperrandTextField.value.trim();
+    let valueOfSecondInput = secondOperrandTextField.value.trim();
+    let operand1 = parseInt(valueOfFirstInput, 10);
+    let operand2 = parseInt(valueOfSecondInput, 10);
+    let firstInputCheck = isNaN(operand1) || operand1.toString().length !== valueOfFirstInput.length;
+    let secondInputCheck = isNaN(operand2) || operand2.toString().length !== valueOfSecondInput.length
+
+    if(firstInputCheck){
+      let errorMessage = document.createElement("div");
+      errorMessage.id= "errorMessageOfFirstOperand";
+      errorMessage.innerHTML = "<p>Это не число</p>";
+      fistOperrandTextField.after(errorMessage);
     }
-    if(isNaN(in2val)){
-      let el = document.getElementById("in2");
-      let err = document.createElement("div");
-      err.id= "errmsg";
-      err.innerHTML = "<p>Это не число</p>";
-      el.after(err);
+    if(secondInputCheck){
+      let errorMessage = document.createElement("div");
+      errorMessage.id= "errorMessageOfSecondOperand";
+      errorMessage.innerHTML = "<p>Это не число</p>";
+      secondOperrandTextField.after(errorMessage);
     }
-    if((isNaN(in2val) + isNaN(in1val)) == 0){
-      let el = document.getElementById("butt");
-      let res = document.createElement("div");
-      res.id= "result";
-      res.innerHTML = in1val + in2val;
-      el.after(res);
+    if(secondInputCheck + firstInputCheck == 0){
+      let result = document.createElement("div");
+      result.id= "resultText";
+      result.innerHTML = operand1 + operand2;
+      resultButton.after(result);
     }
   };
-  document.body.appendChild(i1);
-  document.body.appendChild(spn);
-  document.body.appendChild(i2);
-  document.body.appendChild(br);
-  document.body.appendChild(res);
+
+  document.body.appendChild(fistOperrandTextField);
+  document.body.appendChild(plusText);
+  document.body.appendChild(secondOperrandTextField);
+  document.body.appendChild(breakRow);
+  document.body.appendChild(resultButton);
 }
